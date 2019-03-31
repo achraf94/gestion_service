@@ -1,0 +1,25 @@
+{
+  "name": "maktaba",
+  "version": "1.0.0",
+  "description": "",
+  "main": "index.js",
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1"
+  },
+  "author": "",
+  "license": "ISC",
+  "dependencies": {
+    "bootstrap": "^3.4.1",
+    "jquery": "^3.3.1",
+    "jquery-ui": "^1.12.1",
+    "jquery-ui-dist": "^1.12.1",
+    "jtable": "^2.6.0",
+    "mdbootstrap": "^4.7.5",
+    "sweetalert": "^2.1.2",
+    "validation-engine": "^0.3.3",
+    "x-editable": "^1.5.1"
+  },
+  "devDependencies": {
+    "@fortawesome/fontawesome-free": "^5.8.1"
+  }
+}

@@ -1,0 +1,15 @@
+.img-1{
+    width:60px;
+    height: 40px;
+}
+.img-2{
+    height: 120px;
+}
+body{
+    font-family: 'Roboto Condensed', sans-serif;
+}
+
+.link_ka{
+    color:blue;
+    text-decoration:underline;
+}
