@@ -5,10 +5,8 @@
 <script src="../lib/node_modules/bootstrap/dist/js/bootstrap.js"></script>
 <script src="../lib/node_modules/sweetalert/dist/sweetalert.min.js"></script>
 <?php
-require('../config/db.php');
-$db = db::getInstance();
-include '../config/fun_etype.php';
-$etype = select_etype();
+include '../config/db_config.php';
+$etype = select("etypes");
 
 ?>
 
@@ -77,17 +75,6 @@ $etype = select_etype();
                             }
                             ?>
                         </select>
-                    </div>
-                    <div class="form-group">
-
-                        <label for="Type">Photo</label>
-                        <div class="d-flex justify-content-center">
-                            <div class="btn btn-mdb-color btn-rounded float-left">
-
-                                <input type="file" name="photo">
-                            </div>
-                        </div>
-
                     </div>
 
                 </div>

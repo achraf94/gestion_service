@@ -14,18 +14,15 @@
 <script src="../lib/node_modules/sweetalert/dist/sweetalert.min.js"></script>
 
 <?php 
-
-require('../config/db.php');
-$db = db::getInstance();
 session_start();
-include '../config/fun_enseignant.php';
-
+include '../config/db_config.php';
 $enseignant = array();
 if (!isset($_SESSION["statu"])) {
     header("location:connexion.php");
 }
+
 $param = array("uid" => $_SESSION['user_info'][0]['uid']);
-$enseignant = select_with_param_ens($param);
+$enseignant = select_with_param($param, "enseignants");
 $role = $_SESSION['user_info'][0]['role'];
 $name = $enseignant[0]['nom'] . " " . $enseignant[0]['prenom'];
 ?>
@@ -45,7 +42,7 @@ $name = $enseignant[0]['nom'] . " " . $enseignant[0]['prenom'];
     <nav class="w3-sidebar w3-collapse w3-white w3-animate-left" style="z-index:3;width:300px;" id="mySidebar"><br>
         <div class="w3-container w3-row">
             <div class="w3-col s4">
-                <img src="../lib/img/user/<?php echo $enseignant[0]['pic']; ?>" class="w3-circle w3-margin-right" style="width:46px">
+                <img src="../lib/img/user/default.png" class="w3-circle w3-margin-right" style="width:46px">
             </div>
             <div class="w3-col s8 w3-bar">
                 <span>Bonjour, <strong><?php echo  $name; ?></strong></span><br>
