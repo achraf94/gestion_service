@@ -1,9 +1,9 @@
 <?php
+
 session_start();
 include '../config/db_config.php';
 
 $param = $_POST["param"];
-$uploaddir = '../lib/img/user/';
 switch ($param) {
     case 'connexion':
         $login = $_POST["login"];
@@ -15,6 +15,7 @@ switch ($param) {
         if (Count(select_with_param($data, "users")) > 0) {
             $_SESSION["statu"] = "En ligne";
             $_SESSION["user_info"] = select_with_param($data, "users");
+            $_SESSION["annee"] = "NULL";
             header("location:../vues/index.php");
         } else {
             header("location:../vues/connexion.php?msg=error1");
@@ -56,8 +57,6 @@ switch ($param) {
 
         break;
     case 'deconnexion':
-
         session_destroy();
-
         break;
 }

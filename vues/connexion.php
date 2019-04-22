@@ -1,3 +1,4 @@
+<link rel="icon" href="../lib/img/upec2.png" />
 <link rel="stylesheet" href="../lib/node_modules/@fortawesome/fontawesome-free/css/all.css">
 <link rel="stylesheet" href="../lib/node_modules/bootstrap/dist/css/bootstrap.css">
 <link rel="stylesheet" href="../lib/projet_css/connexion.css">
@@ -7,7 +8,6 @@
 <?php
 include '../config/db_config.php';
 $etype = select("etypes");
-
 ?>
 
 <div class="login">
@@ -87,16 +87,15 @@ $etype = select("etypes");
     </div>
 </div>
 <script>
+<?php
+if (isset($_GET["msg"]) && $_GET["msg"] == "error1") {
+    echo "swal('ERROR #1', 'login ou mot de passe incorrects', 'error');";
+} else if (isset($_GET["msg"]) && $_GET["msg"] == "error2") {
+    echo "swal('ERROR #2', 'champs vide', 'error');";
+} else if (isset($_GET["msg"]) && $_GET["msg"] == "done") {
+    ?>
+        swal('Good job!', 'Vous pouvez se connecter avec <?php echo $_GET["login"]; ?> ', 'success');
     <?php
-    if (isset($_GET["msg"]) && $_GET["msg"] == "error1") {
-        echo "swal('ERROR #1', 'login ou mot de passe incorrects', 'error');";
-    } else if (isset($_GET["msg"]) && $_GET["msg"] == "error2") {
-        echo "swal('ERROR #2', 'champs vide', 'error');";
-    } else if (isset($_GET["msg"]) && $_GET["msg"] == "done") {
-        ?>
-    swal('Good job!', 'Vous pouvez se connecter avec <?php echo $_GET["login"]; ?> ', 'success');
-    <?php
-
 }
 ?>
 </script> 
