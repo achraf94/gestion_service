@@ -1,5 +1,4 @@
 <?php
-session_start();
 include '../config/db_config.php';
 
 $ListUser = select("users");
@@ -47,5 +46,5 @@ $uid = $_SESSION['user_info'][0]['uid'];
             <?php } ?>
         </tbody>
     </table>
-
 </div>
+

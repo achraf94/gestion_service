@@ -21,8 +21,10 @@
     if (!isset($_SESSION["statu"])) {
     header("location:connexion.php");
     }
-
+//selectionner le ID de user 
     $param = array("uid" => $_SESSION['user_info'][0]['uid']);
+    //selectionner les donnees de cet utilisateur 
+    //select * from user where uid=$param
     $enseignant = select_with_param($param, "enseignants");
     $_SESSION["enseignant_info"] = select_with_param($param, "enseignants");
     $role = $_SESSION['user_info'][0]['role'];
@@ -36,9 +38,7 @@
             <span class="w3-bar-item w3-right w3-text-red">
                 <select style="margin-top: 3px;" id="changeAnnee">
                     <option value="-1">--</option>
-                    <option>2019</option>
-                    <option>2018</option>
-                    <option>2017</option>
+                   
                     <option>2016</option>
                     <option>2015</option>
 
@@ -59,8 +59,13 @@
                 </div>
                 <div class="w3-col s8 w3-bar">
                     <span>Bonjour, <strong><?php echo $name; ?></strong></span><br>
+                    
                     <a href="#" class="w3-bar-item w3-button" title="Statistique "><i class="fa fa-chart-line w3-text-orange"></i></a>
-                    <a href="#" data-page="gestion_user" class="navigate_link w3-bar-item w3-button" title="Configuration Utilisateur"><i class="fas fa-user-cog w3-text-brown"></i></i></a>
+                    <a href="#" class="w3-bar-item w3-button" title="mdpupdate "><i class="fas fa-key"></i></a>
+                    <?php
+                       if($role=="admin"){?>
+                            <a href="#" data-page="gestion_user" class="xmenuleft navigate_link w3-bar-item w3-button" title="Configuration Utilisateur"><i class="fas fa-user-cog w3-text-brown"></i></i></a>
+                    <?php } ?>
                 </div>
             </div>
 
@@ -82,9 +87,11 @@
                 <a href="#" data-page="enseignant" class="navigate_link w3-bar-item w3-button w3-padding xmenuleft"><i class="fa fa-users fa-fw w3-text-green"></i> ENSEIGNANTS</a>
                 <a href="#" data-page="groupe" class="navigate_link w3-bar-item w3-button w3-padding xmenuleft"><i class="fa fa-layer-group fa-fw w3-text-purple"></i> GROUPES</a>
                 <a href="#" data-page="module" class="navigate_link w3-bar-item w3-button w3-padding xmenuleft"><i class="fa fa-book-open fa-fw w3-text-yellow"></i> MODULES</a>
+
                 <?php
                 if($role=="admin"){
                 ?>
+                 <a href="#" data-page="gtype" class="navigate_link w3-bar-item w3-button w3-padding xmenuleft"><i class="fas fa-swatchbook"></i>GTYPES</a>
                 <a href="#" data-page="affectation" class="navigate_link w3-bar-item w3-button w3-padding xmenuleft"><i class="fas fa-dice-d20 fa-fw w3-text-aqua"></i> AFFECTATION</a>
                 <?php } ?>
             </div>
@@ -93,7 +100,7 @@
 
         <script>
             $(function () {
-                //____________________________________________________
+                //_________quand je clique sur boutton logout on revient a la page de connexion___________________
                 $(".disco").click(function () {
                     $.ajax({
                         url: "../controller/user.php",
@@ -111,21 +118,32 @@
                     $(this).addClass("w3-blue");
                 });
 
-                function clear_blue() {
-                    $("#changeAnnee").val(-1);
-                    $(".xmenuleft").removeClass("w3-blue");
-                }
+
                 //____________________________________________________
                 var page = "";
                 var annee = "";
+                //post cest une fonciton qui appel $.post ajax (ajax permet de faire des aller retour cote serveur sans charger notre page) 
+                // afin de charger la bonne page dans notre child_template () cest lespace gris
+                // kifach katkhdam ?
+                // declenche un event click sur la class navigate_link
+                // je recup le variable dans data-page 
+                // avec ce vairable je l'utulise dans controller dashboard
+                // pour determiner quelle page je doit afficher ou charger
                 $(".navigate_link").click(function () {
                     page = $(this).data("page"); // determine la page inclut dans data
                     post({
                         param: page
                     });
                 });
+
+
                 $("#changeAnnee").change(function () {
                     annee = $(this).val();
+                    // chaque class navigate_link kina fi code 
+                    // kider liha test ?
+                    // le test cest wach fik w3-blue
+                    // si oui  3amar page 
+                    
                     $(".navigate_link").each(function () {
                         if ($(this).hasClass("w3-blue")) {
                             page = $(this).data("page");
@@ -145,4 +163,9 @@
                     $("#child_template").html(data);
                 });
             }
+            function clear_blue() {
+                    // set value -1 pour la select anneee -- 
+                    $("#changeAnnee").val(-1);
+                    $(".xmenuleft").removeClass("w3-blue");
+                }
         </script>

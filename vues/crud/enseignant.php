@@ -27,7 +27,7 @@ $role = $_SESSION['user_info'][0]['role'];
             $data = array("etid" => $row["etid"]);
             $etyp_value = select_with_param($data, "etypes", "nbh");
             ?>
-            <div style="height:270px;" class="col-xs-6 col-md-2 icard w3-white w3-margin w3-border w3-round-xlarge" data-idEnseignant="<?php echo $row["eid"]; ?>">
+            <div style="height:300px;" class="col-xs-6 col-md-2 icard w3-white w3-margin w3-border w3-round-xlarge" data-idEnseignant="<?php echo $row["eid"]; ?>">
                 <div class="card w3-center">
                     <h5 class="card-title w3-left"><?php echo $row["annee"]; ?></h5>
                     <h5 class="card-title w3-right"><?php echo $etyp_value[0]["nbh"]; ?>H</h5>
@@ -41,9 +41,9 @@ $role = $_SESSION['user_info'][0]['role'];
                 </div>
                 <?php if ($role == "admin") { ?>
                     <div class="w3-center w3-animate-zoom action ">
-                        <i class="delete fa fa-trash-alt w3-text-red position-absolute w3-button  w3-circle"></i>
-                        <i class="edit fa fa-pencil-alt w3-text-green position-absolute w3-button  w3-circle"></i>
-
+                    <i data-idens="<?php echo $row["eid"]; ?>" class="delete fa fa-trash-alt w3-text-red position-absolute w3-button "></i>
+                        <button type="button" data-toggle="modal" data-target="#modifierenseignant" class="modifier fa fa-pencil-alt w3-text-green position-absolute w3-button  w3-circle" data-idens="<?php echo $row["eid"]?>"  data-nom="<?php echo $row["nom"]; ?>" data-prenom="<?php echo $row["prenom"];?>"data-email="<?php echo $row["email"]; ?>"data-tel="<?php echo $row["tel"]; ?>"></button>
+                        <input type="hidden" id="idEns_h">
                     </div>
                 <?php }
                 ?>
@@ -57,12 +57,102 @@ $role = $_SESSION['user_info'][0]['role'];
 
 </div>
 
+
 <script>
     $(function () {
         var id = "";
+        // fonction delete
         $(".delete").click(function () {
-            id = $(this).parents("div.icard").data('idenseignant');
-
+            id = $(this).data('idens');
+             // Start IF
+            if(confirm("voulez vous suppriemr cet enseignant")){
+                $(this).parents("div.icard").animate({bottom:'202px'}, function(){
+                      $(this).detach(); });
+            //AJAX envois juste le id afin de supprimer le group 
+             $.post("../controller/enseignant.php",{param:"supprimer",id:id});
+            }
+            // end IF
         });
+        $(".modifier").click(function(){
+
+        $("#idEns_h").val($(this).data("idens"));
+        // id li ghadi nkhabi bach fi applymodification nsefto lserveur bach imodifier 
+        // les info bi had id 
+        $("#nom").val($(this).data("nom"));
+         $("#prenom").val($(this).data("prenom"));
+         $("#mail").val($(this).data("email"));
+        $("#tel").val($(this).data("tel"));
+        
+        });
+        $("#applyModification").click(function(){
+            id=$("#idEns_h").val();
+            nom = $("#nom").val();
+            prenom = $("#prenom").val();
+            email = $("#mail").val();
+            tel =  $("#tel").val();
+            //1 mes arguments
+            arg = {param:"modifier",id:id,nom:nom,prenom:prenom,email:email,tel:tel};
+            // ma fonction en cas de sucess { ya3ni mchiit serveur ou dart le traitement neccessaire ou rja3t sans mochkil }
+            success = function(data) {
+                location.reload();
+            }
+            post(arg,success);
+        });
+        function post(param,success) {
+            $.post("../controller/enseignant.php", param,success);
+        }
     });
-</script> 
+
+
+</script>
+
+
+<div class="modal fade" id="modifierenseignant" tabindex="-1" role="dialog" aria-labelledby="exampleModalLongTitle" aria-hidden="true">
+    <div class="modal-dialog" role="document">
+        <div class="modal-content registr">
+            <form action="../controller/enseignant.php" method="POST" enctype="multipart/form-data">
+                <div class="modal-header" style="text-align:center;">
+                    <h2 class="modal-title">
+                        modifier Enseignant
+                    </h2>
+                    <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                        <span aria-hidden="true">&times;</span>
+                    </button>
+                </div>
+                <div class="modal-body">
+                    <div class="form-group">
+                        <label for="Nom">Nom</label>
+                        <input type="text" class="form-control" id="nom" placeholder="Votre Nom .." require>
+                    </div>
+                    <div class="form-group">
+                        <label for="Prenom">Prenom</label>
+                        <input type="text" class="form-control" id="prenom" placeholder="Votre Prenom .." require>
+                    </div>
+
+                    <div class="form-group">
+                        <label for="mail">Email</label>
+                        <input type="mail" class="form-control" id="mail" placeholder="Votre Email .." require>
+                    </div>
+                    <div class="form-group">
+                        <label for="tel">Tel</label>
+                        <input type="tel" class="form-control" id="tel" pattern="[0-9]{2}[0-9]{2}[0-9]{2}[0-9]{2}[0-9]{2}" placeholder="Votre Tel .." require>
+                        <small id="emailHelp" class="form-text text-muted">Format: 0701102040</small>
+                    </div>
+
+                    <div class="modal-footer">
+                    <button type="button"  class="btn btn-primary" id= "applyModification" >enregistrer</button>
+                </div>
+
+                </div>
+              
+            </form>
+        </div>
+    </div>
+</div>
+
+
+
+
+
+
+

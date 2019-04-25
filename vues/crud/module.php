@@ -42,7 +42,7 @@ $role = $_SESSION['user_info'][0]['role'];
                 </div>  <br>
                 <?php if ($role == "admin") { ?>
                     <div class="w3-center w3-animate-zoom action ">
-                        <i class="delete fa fa-trash-alt w3-text-red position-absolute w3-button  "></i>
+                        <i data-supprimer="<?php echo $row["mid"];?>" class="delete fa fa-trash-alt w3-text-red position-absolute w3-button  "></i>
                         <i class="edit fa fa-pencil-alt w3-text-green position-absolute w3-button "></i>
                     </div>
                 <?php }
@@ -62,7 +62,13 @@ $role = $_SESSION['user_info'][0]['role'];
     $(function () {
         var id = "";
         $(".delete").click(function () {
-            id = $(this).parents("div.icard").data('idenseignant');
+            id=$(this).data('supprimer');
+            if(confirm("voulez vous suppriemr cet module")){
+                $(this).parents("div.icard").animate({bottom:'202px'}, function(){
+                      $(this).detach(); });
+             $.post("../controller/enseignant.php",{aram:"supprimer",id:id})
+            
+            }
 
         });
     });

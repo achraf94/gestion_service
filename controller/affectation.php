@@ -6,7 +6,7 @@ $annee = isset($_POST["annee"]) && $_POST["annee"] != "-1" && !empty($_POST["ann
 
 
 switch ($param) {
-    case 'listGroup':
+    case 'listGroup_affecter':
         $eid = isset($_POST["ide"]) && !empty($_POST["ide"]) ? $_POST["ide"] : "NULL";
         $sql = "select g.* from groupes g,affectations a where g.gid = a.gid and a.eid =" . $eid;
         if ($annee != "NULL") {
@@ -29,12 +29,30 @@ switch ($param) {
                     </div>
                     <br><br>
 
-                    <h5 class="card-title w3-center w3-large">  <?php echo $module[0]["intitule"] ?></h5>
+                   <h5 class="card-title w3-center w3-large">  <?php echo $module[0]["intitule"] ?></h5>
 
                 </div>
             </div>
             <?php
         }
 
+        break;
+
+        case "listGroup_Nonaffecter":
+        $id = $_POST["ide"];
+        $annee = $_POST["annee"];
+        $data = select_with_sql("SELECT g.*,m.*FROM modules m,groupes g,affectations a  WHERE  g.mid = m.mid and  g.gid = a.gid AND a.eid != $id and g.annee= $annee");
+        echo loadJson_Array($data);
+      
+        break;
+        
+        case "appliquer_affectation":
+      //  arg = {nbreheur:nbh,idenseignant:ide,groupeid:gid,param:"appliquer_affectation"};
+
+       $nbh = $_POST["nbreheur"];
+       $ide = $_POST["idenseignant"];
+       $gid = $_POST["groupeid"];
+       $sql="INSERT into affectations values($ide,$gid,$nbh)";
+       exec_crud($sql);
         break;
 }

@@ -34,7 +34,25 @@ function loadArrayList($sql) {
     }
     return $array;
 }
-
+/* json permet de transformer un tableau a un format plus portable pour pouvoir l'envoyé 
+// a une interface web
+Array
+(
+    [gid] => 29
+    [mid] => 5
+    [nom] => TP3
+    [annee] => 2016
+    [gtid] => 9
+)
+{"gid":"29","mid":"5","nom":"TP3","annee":"2016","gtid":"9"}
+*/
+function loadJson_Array($array) {
+    $ar = array();
+    foreach ( $array as $row => $array){
+        array_push ($ar,$array);
+    }
+    return json_encode($ar);
+}
 // permet d'avoir nombre de ligne
 function getListCount($sql) {
     return count(loadArrayList($sql));
@@ -59,13 +77,7 @@ function getOneColumn($sql = "", $column = "") {
     return loadArrayList($sql)[0][$column];
 }
 
-function update() {
-    
-}
 
-function delete() {
-    
-}
 
 function insert($data = array(), $table = "", $columns = "", $primary = "") {
     $sql = "insert into  $table( $columns) values(";
