@@ -110,7 +110,7 @@ $role = $_SESSION['user_info'][0]['role'];
 <div class="modal fade" id="modifierenseignant" tabindex="-1" role="dialog" aria-labelledby="exampleModalLongTitle" aria-hidden="true">
     <div class="modal-dialog" role="document">
         <div class="modal-content registr">
-            <form action="../controller/enseignant.php" method="POST" enctype="multipart/form-data">
+
                 <div class="modal-header" style="text-align:center;">
                     <h2 class="modal-title">
                         modifier Enseignant
@@ -144,8 +144,7 @@ $role = $_SESSION['user_info'][0]['role'];
                 </div>
 
                 </div>
-              
-            </form>
+
         </div>
     </div>
 </div>

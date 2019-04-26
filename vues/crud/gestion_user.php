@@ -33,13 +33,8 @@ $uid = $_SESSION['user_info'][0]['uid'];
                     <td><?php echo $user["role"]; ?></td>
                     <td style="width: 100px;">
                         <div class="w3-small">
-                            <?php if ($uid == $user['uid'] || $role == "admin") { ?>
                                 <button class="w3-white"><i class="fas fa-user-edit w3-text-green"></i></button>
-                            <?php } ?>
-
-                            <?php if ($role == "admin") { ?>
                                 <button class="w3-white"><i class="fas fa-trash-alt w3-text-red"></i></button>
-                                <?php } ?>
                         </div>
                     </td>
                 </tr>

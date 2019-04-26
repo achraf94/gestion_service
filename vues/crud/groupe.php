@@ -20,7 +20,7 @@ $role = $_SESSION['user_info'][0]['role'];
     <?php }
     ?>
 </header>
-<div class="w3-row-padding w3-margin-bottom">
+<div class="w3-row-padding  w3-margin">
 
     <div class="row">
         <?php
@@ -54,8 +54,6 @@ $role = $_SESSION['user_info'][0]['role'];
         }
         ?>
     </div>
-
-
 </div>
 <div id="ModfidierGroup" class="modal fade" role="dialog">
                  <div class="modal-dialog">

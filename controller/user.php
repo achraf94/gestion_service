@@ -59,4 +59,20 @@ switch ($param) {
     case 'deconnexion':
         session_destroy();
         break;
+        case "modifier_motdepass":
+            $nouveau = !empty($_POST["nouveau"]) ? md5($_POST["nouveau"]) : "null";
+            $ancien = !empty($_POST["ancien"]) ? md5($_POST["ancien"]) : "null";
+             
+            $tokenModification =  select_with_param(array("mdp"=>$ancien),"users");
+            
+            $output = array();
+            if(empty($tokenModification)){
+                $output["motdepass"] = "null";
+            }else{
+            $sql = "update users set mdp = '$nouveau' where mdp ='$ancien'";
+            exec_crud($sql);
+            $output["motdepass"] = "OK";
+            }
+            echo json_encode($output);
+            break;
 }

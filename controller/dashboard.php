@@ -18,7 +18,7 @@ switch ($param) {
         include("../vues/crud/gestion_user.php");
         break;
     case 'index_statistique' :
-        include '../vues/statistique/index.php';
+        include '../vues/non-complet/index.php';
         break;
     case 'affectation' :
         include '../vues/crud/affectation.php';

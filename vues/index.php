@@ -9,7 +9,6 @@ include 'template/header.php';
 
 <!-- !PAGE CONTENT! -->
 <div id="child_template" class="w3-main" style="margin-left:300px;margin-top:43px;">
-    <?php include './statistique/index.php'; ?> 
 </div>
 
 

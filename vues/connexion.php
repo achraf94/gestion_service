@@ -1,10 +1,10 @@
 <link rel="icon" href="../lib/img/upec2.png" />
-<link rel="stylesheet" href="../lib/node_modules/@fortawesome/fontawesome-free/css/all.css">
-<link rel="stylesheet" href="../lib/node_modules/bootstrap/dist/css/bootstrap.css">
+<link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/font-awesome/4.7.0/css/font-awesome.min.css">
+<link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/css/bootstrap.min.css">
 <link rel="stylesheet" href="../lib/projet_css/connexion.css">
-<script src="../lib/node_modules/jquery/dist/jquery.js"></script>
-<script src="../lib/node_modules/bootstrap/dist/js/bootstrap.js"></script>
-<script src="../lib/node_modules/sweetalert/dist/sweetalert.min.js"></script>
+<script src="https://code.jquery.com/jquery-3.4.0.js"></script>
+<script src="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/js/bootstrap.min.js"></script>
+<script src="https://cdnjs.cloudflare.com/ajax/libs/sweetalert/2.1.2/sweetalert.min.js"></script>
 <?php
 include '../config/db_config.php';
 $etype = select("etypes");

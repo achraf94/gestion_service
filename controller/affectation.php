@@ -20,7 +20,8 @@ switch ($param) {
             $module = select_with_param($data, "modules", "intitule");
             ?>
             <div style="height:270px;width: auto;" class="col-xs-4 col-md-2 w3-sand icard w3-margin w3-border w3-round-xlarge">
-                <div class="w3-container w3-center w3-padding">
+            <button type="button" class="close w3-text-red delete" data-idgroup="<?php echo  $row["gid"];?>">&times;</button> 
+            <div class="w3-container w3-center w3-padding">
                     <h5 class="card-title w3-center w3-text-blue "><?php echo $row["nom"]; ?></h5>
                     <img src="../lib/img/user/group.png" class="card-img-top img-2">
                     <div class=" card-body">
@@ -47,12 +48,20 @@ switch ($param) {
         break;
         
         case "appliquer_affectation":
-      //  arg = {nbreheur:nbh,idenseignant:ide,groupeid:gid,param:"appliquer_affectation"};
+
 
        $nbh = $_POST["nbreheur"];
        $ide = $_POST["idenseignant"];
        $gid = $_POST["groupeid"];
-       $sql="INSERT into affectations values($ide,$gid,$nbh)";
+       $sql="INSERT into affectations values('$ide','$gid','$nbh')";
        exec_crud($sql);
+        break;
+
+        case 'supprimer_groupe':
+
+        $gid = $_POST["gid"];
+        $sql="delete from affection where gid = '$gid'";
+        echo $sql;
+        //exec_crud($sql);
         break;
 }

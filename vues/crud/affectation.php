@@ -130,7 +130,17 @@ $role = $_SESSION['user_info'][0]['role'];
             post(arg,null);
             alert("affectation a ete enregistree");
         });
+        $("#groupes").on("click",".delete",function(){
+            if(confirm("voulez vous suppriemr le groupe")){
+                $(this).parents("div.icard").animate({bottom:'202px'}, function(){
+                    $(this).detach(); 
+             });
+            gid = $(this).data("idgroup");
+             arg = {gid: gid, param: "supprimer_groupe"};
+            post(arg,null);            
+            }
 
+        });
         function post(param,Myfunction) {
             $.post("../controller/affectation.php", param,Myfunction);
         }
@@ -146,18 +156,23 @@ $role = $_SESSION['user_info'][0]['role'];
                      <div class="modal-content">
                         <div class="modal-header">
                             <button type="button" class="close" data-dismiss="modal">&times;</button>
-                            <h4 class="modal-title">Affecter un nouveau groupe à Monsieur : <span class="w3-badge w3-green"id="NomAfected"></span></h4>
+                            <h4 class="modal-title">Affecter un nouveau groupe à Monsieur : <span class="w3-margin w3-padding w3-green"id="NomAfected"></span></h4>
                         </div>
-                        <div class="modal-body w3-center">
-                            <select  class="form-control"id="group_af">
-                            </select>
-                            <input type="number" id="nbh">
+                        <div class="modal-body">
+                            <div class="form-group">
+                                <label for="pass">Groupe</label>
+                               <select  class="form-control"id="group_af"></select>
+                          </div>
+                          <div class="form-group">
+                                <label for="pass">Nombre heurs</label><br>
+                                <input type="number" valeu ="0"class="form-control"id="nbh">
+                          </div>
+                            
                          </div>   
                          <div class="modal-footer">
-                         <button type="button" class="btn btn-danger" data-dismiss="modal">close</button>
+                            <button type="button" class="btn btn-danger" data-dismiss="modal">close</button>
                             <button type="button" class="btn btn-suceess" id="affecter">Affecter</button>
                             <input type="hidden" id="id_ens">
-                           
                         </div>         
                     </div>
                   </div>
