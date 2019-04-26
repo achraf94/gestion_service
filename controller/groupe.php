@@ -1,4 +1,5 @@
 <?php
+
 include '../config/db_config.php';
 // khask parametre
 
@@ -6,10 +7,11 @@ include '../config/db_config.php';
 $param = $_POST["param"];
 switch ($param) {
     case 'supprimer':
-            $id=  $_POST["id"];
-          print_r(exec_crud("delete from groupes where gid = $id"));
+        $id = $_POST["id"];
+        exec_crud("delete from groupes where gid = $id");
+
         break;
     case 'modifier':
- 
+
         break;
 }

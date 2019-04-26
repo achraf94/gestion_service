@@ -2,7 +2,7 @@
 
 session_start();
 $param = $_POST["param"];
-$annee = isset($_POST["annee"]) && !empty($_POST["param"]) && !empty($_POST["annee"]) ? $_POST["annee"] : "NULL";
+$annee = isset($_POST["annee"]) && !empty($_POST["param"]) && !empty($_POST["annee"]) ? $_POST["annee"] : "2015";
 $_SESSION["annee"] = $annee;
 switch ($param) {
     case 'enseignant':

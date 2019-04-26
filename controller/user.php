@@ -30,7 +30,8 @@ switch ($param) {
         $mail = !empty($_POST["mail"]) ? $_POST["mail"] : "null";
         $passe = !empty($_POST["passe"]) ? $_POST["passe"] : "null";
         $annee = !empty($_POST["annee"]) ? $_POST["annee"] : "null";
-        $type = !empty($_POST["Type"]) ? $_POST["Type"] : "null";
+        $type = !empty($_POST["type"]) ? $_POST["type"] : "null";
+        $output = array();
         $data_enseignant = array(
             "uid" => "",
             "nom" => $nom,
@@ -46,33 +47,43 @@ switch ($param) {
             array_push($data_user, $login);
             array_push($data_user, md5($passe));
             array_push($data_user, "user");
-            $lastid = insert($data_user, "users", "login,mdp,role", "uid");
-            $data_enseignant["uid"] = $lastid;
+            $lastID = insert($data_user, "users", "login,mdp,role", "uid");
+            $data_enseignant["uid"] = $lastID;
             insert($data_enseignant, "enseignants", "uid,nom,prenom,email,tel,etid,annee", "eid");
-            header("location:../vues/connexion.php?msg=done&login=" . $login);
+            $output["login"] = $login;
+            $output["stat"] = "OK";
         } else {
-            header("location:../vues/connexion.php?msg=error2");
+            $output["stat"] = "ERROR2";
         }
-
+        echo json_encode($output);
 
         break;
     case 'deconnexion':
         session_destroy();
         break;
-        case "modifier_motdepass":
-            $nouveau = !empty($_POST["nouveau"]) ? md5($_POST["nouveau"]) : "null";
-            $ancien = !empty($_POST["ancien"]) ? md5($_POST["ancien"]) : "null";
-             
-            $tokenModification =  select_with_param(array("mdp"=>$ancien),"users");
-            
-            $output = array();
-            if(empty($tokenModification)){
-                $output["motdepass"] = "null";
-            }else{
+    case 'supprimer':
+        $id = $_POST["id"];
+        $ens = $_POST["ens"];
+        if ($ens == "OK") {
+            exec_crud("delete from enseignants where uid = '$id'");
+        }
+        exec_crud("delete from users where uid = '$id'");
+
+        break;
+    case "modifier_motdepass":
+        $nouveau = !empty($_POST["nouveau"]) ? md5($_POST["nouveau"]) : "null";
+        $ancien = !empty($_POST["ancien"]) ? md5($_POST["ancien"]) : "null";
+
+        $tokenModification = select_with_param(array("mdp" => $ancien), "users");
+
+        $output = array();
+        if (empty($tokenModification)) {
+            $output["motdepass"] = "null";
+        } else {
             $sql = "update users set mdp = '$nouveau' where mdp ='$ancien'";
             exec_crud($sql);
             $output["motdepass"] = "OK";
-            }
-            echo json_encode($output);
-            break;
+        }
+        echo json_encode($output);
+        break;
 }
